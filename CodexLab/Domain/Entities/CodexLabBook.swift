@@ -4,7 +4,7 @@ enum CodexLabMetadata {
     static let name = "Codex Lab"
     static let tagline = "Every book is a reagent. Every page an experiment."
     static let version = "2.0.0-lab"
-    static let seedKey = "com.codexlab.didSeed.v2"
+    static let seedKey = "com.codexlab.didSeed.v4"
     static let cameraPrompt = "Load specimen vial barcode for analysis"
     static let leadChemist = "Dr. Codex"
     static let unit = "molecules"

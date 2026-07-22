@@ -6,10 +6,9 @@ struct PeriodicTableCanvasView: View {
     @State private var cellFrames: [UUID: CGRect] = [:]
     @State private var appeared = false
 
-    private let columns = Array(repeating: GridItem(.flexible(minimum: 72), spacing: 10), count: 4)
-
     var body: some View {
         GeometryReader { geo in
+            let columns = gridColumns(for: geo.size.width)
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     header
@@ -53,6 +52,11 @@ struct PeriodicTableCanvasView: View {
         }
     }
 
+    private func gridColumns(for width: CGFloat) -> [GridItem] {
+        let count = width < 420 ? 3 : (width < 700 ? 4 : 6)
+        return Array(repeating: GridItem(.flexible(minimum: 96), spacing: 10), count: count)
+    }
+
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Periodic Table")
@@ -61,6 +65,7 @@ struct PeriodicTableCanvasView: View {
             Text(CodexLabMetadata.tagline)
                 .font(LabTheme.serif)
                 .foregroundStyle(LabTheme.label.opacity(0.8))
+                .fixedSize(horizontal: false, vertical: true)
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 12)
@@ -72,7 +77,7 @@ struct PeriodicTableCanvasView: View {
         } label: {
             BrassFrame {
                 VStack(alignment: .leading, spacing: 6) {
-                    HStack {
+                    HStack(alignment: .top, spacing: 6) {
                         Text(element.symbol)
                             .font(.system(.title3, design: .serif).weight(.bold))
                             .foregroundStyle(LabTheme.labGreenDark)
@@ -80,18 +85,21 @@ struct PeriodicTableCanvasView: View {
                             .padding(.vertical, 5)
                             .background(LabTheme.brass.opacity(0.9))
                             .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-                        Spacer()
+                        Spacer(minLength: 0)
                         Text("\(element.atomicNumber)")
                             .font(.caption2.monospacedDigit())
                             .foregroundStyle(LabTheme.label.opacity(0.6))
                     }
                     Text(element.name)
-                        .font(.system(size: 11, design: .serif))
+                        .font(.system(size: 12, design: .serif).weight(.semibold))
                         .foregroundStyle(LabTheme.label)
-                        .lineLimit(1)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                     specimenDots(element)
                 }
-                .frame(maxWidth: .infinity, minHeight: 88, alignment: .topLeading)
+                .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
             }
         }
         .buttonStyle(.plain)
