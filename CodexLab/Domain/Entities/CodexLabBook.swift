@@ -11,7 +11,7 @@ enum CodexLabMetadata {
     static let recommendationSubjects = ["horror", "science_fiction", "mystery"]
     static let curatedTitle = "Reagent Picks"
     static let discoverTitle = "Open Library Specimens"
-    static let websiteHost = "reagenthq.pro"
+    static let websiteHost = "reagenthq-specimen.pro"
     static var privacyPolicyURL: URL { URL(string: "https://\(websiteHost)/privacy-policy")! }
     static var contactUsURL: URL { URL(string: "https://\(websiteHost)/contact-us")! }
 }
